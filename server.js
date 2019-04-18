@@ -1,16 +1,29 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mathLib = require('mathjs');
 const app = express()
 const port = process.env.PORT || 8081
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({type: 'application/*+json'}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello world');
 })
 
 app.post('/webhook', (req, res) => {
-  console.log('Received');
-  console.log(req.body);
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({'message': 'Hello eiei.'}));
+
+  let output;
+
+  if (req.body.intent.displayName == "Calculator") {
+    output = {'fulfillmentText': mathLib.eval(req.body.queryResult.parameters.expression)}
+  }
+
+  console.log(mathLib.eval(req.body.queryResult.parameters.expression));
+  
+  res.send(output);
 })
 
 app.listen(port, () => {
