@@ -6,8 +6,11 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 })
 
-app.post('/hello', (req, res) => {
-  res.send('Hello eiei.');
+app.post('/webhook', (req, res) => {
+  console.log('Received');
+  console.log(req.body);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({'message': 'Hello eiei.'}));
 })
 
 app.listen(port, () => {
