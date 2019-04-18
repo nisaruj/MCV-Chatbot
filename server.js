@@ -17,7 +17,7 @@ app.post('/webhook', (req, res) => {
 
   let output;
 
-  if (req.body.intent.displayName == "Calculator") {
+  if (req.body.queryResult.intent.displayName == "Calculator") {
     output = {'fulfillmentText': mathLib.eval(req.body.queryResult.parameters.expression)}
   }
 
