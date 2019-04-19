@@ -24,8 +24,6 @@ app.post('/webhook', (req, res) => {
   if (req.body.queryResult.intent.displayName == "Time Telling") {
     output = {'fulfillmentText': new Date(Date.now()).toLocaleString()}
   }
-
-  console.log(mathLib.eval(req.body.queryResult.parameters.expression));
   
   res.send(output);
 })
