@@ -19,10 +19,10 @@ app.post('/webhook', (req, res) => {
 
   if (req.body.queryResult.intent.displayName == "Calculator") {
     output = {'fulfillmentText': mathLib.eval(req.body.queryResult.parameters.expression)}
-  }
-
-  if (req.body.queryResult.intent.displayName == "Time Telling") {
-    output = {'fulfillmentText': new Date(Date.now()).toLocaleString()}
+  } else if (req.body.queryResult.intent.displayName == "Time Telling") {
+    output = {'fulfillmentText': 'ขณะนี้เวลา' + new Date(Date.now()).toLocaleString('en-GB', { timeZone: "Asia/Bangkok"})}
+  } else {
+    output = {'fulfillmentText': "What are you talking about?"}
   }
   
   res.send(output);
