@@ -34,7 +34,7 @@ app.post('/webhook', async (req, res) => {
     });
     //console.log(weatherResult);
     let temp = weatherResult.main.temp;
-    output = { 'fulfillmentText': "ตอนนี้อุณหภูมิ " + (temp - 272.15) + ' องศา' };
+    output = { 'fulfillmentText': "ตอนนี้อุณหภูมิ " + (temp - 272.15).toFixed(2) + ' องศา' };
   } else {
     output = { 'fulfillmentText': "What are you talking about?" }
   }
