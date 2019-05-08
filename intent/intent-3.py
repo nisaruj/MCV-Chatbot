@@ -1,1 +1,1 @@
-"Q3: How to download course material?"
+"Q3: How to enroll courses (for students)"
