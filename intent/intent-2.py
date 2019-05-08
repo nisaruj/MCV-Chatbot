@@ -24,7 +24,7 @@ def generateSentence(n):
 
         s += question_phrase[np.random.randint(0,len(question_phrase))]
         s += manner_phrase[np.random.randint(0,len(manner_phrase))]
-        s += question_mark[np.random.randint(0,1)]       
+        s += question_mark[np.random.randint(0,2)]       
         if(s in D):
             i -= 1
             continue
