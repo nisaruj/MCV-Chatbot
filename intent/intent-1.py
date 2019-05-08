@@ -6,9 +6,8 @@ import json
 
 D = dict() #check for double occurances
 dictJSON = dict()
-intent_GUID = "a3cb797f-1833-1111-adf3-"
+intent_GUID = "a3cb797f-1833-1111-adf3-7d704fa7b000"
 user_says_GUID = "a3cb797f-1833-0000-adf3-"
-says_id = 0
 sentenceJSON = '{"id": "","data": [{"text": ""}],"isTemplate": false,"count": 0,"isAuto": false}'
 start_phrase = ["จะ", "ต้อง" , "อยากทราบว่า" , "อยากรู้ว่า", "ทำ"]
 verb = ["เพิ่ม", "กรอก", "ใส่", "เติม"]
@@ -26,12 +25,13 @@ def generateGUID(n):
     while(len(t) < 36):
         t += '0'
     return t
-def addSentenceToJson(Sentence):
+def addSentenceToJson(Sentence,id):
     y = json.loads(sentenceJSON)
+    print(y)
     y["id"] = generateGUID(id)
     id+=1
     y["data"]=[{"text" : Sentence}]
-
+    dictJSON["userSays"].append(y)
 def generateSentence(n):
     file = open("intent-1-out.txt","w")
     a = []
@@ -53,17 +53,25 @@ def generateSentence(n):
             continue
         D[s] = True
         a.append(s)
-        addSentenceToJson(s)
+        addSentenceToJson(s,i)
     for line in a:
         file.writelines(line + "\n")
+    jsonFile = open('intent-1.json','w')
+    #jsonFile.writelines(json.dumps(dictJSON))
+    print(json.dumps(dictJSON))
 def parseJSON():
     fileJSON = open('template.json','r')
     stringJSON = ""
     for line in fileJSON:
         stringJSON += line
-    dictJSON = json.loads(stringJSON)
+    return json.loads(stringJSON)
     #print(type(dictJSON['userSays'][0]))
     # 'userSays': [{'id': '', 'data': [{'text': ''}], 'isTemplate': False, 'count': 0, 'isAuto': False}] 
+def initializeJSON():
+    global dictJSON
+    dictJSON["id"] = intent_GUID
+    dictJSON["name"] = "Q1: How to input scores?"
 if __name__ == "__main__":
-    #generateSentence(1000)
-    parseJSON()
+    dictJSON = parseJSON()
+    initializeJSON()
+    generateSentence(5)
