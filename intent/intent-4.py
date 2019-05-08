@@ -47,4 +47,4 @@ def generateSentence(n):
 
 
 if __name__ == "__main__":
-    generateSentence(1000)
+    generateSentence(2000)

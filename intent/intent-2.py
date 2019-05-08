@@ -3,35 +3,49 @@
 import numpy as np 
 import os
 import json
+import util
 
 D = dict() #check for double occurances
-
-start_phrase = ["จะ", "ต้อง" , "อยากทราบว่า" , "อยากรู้ว่า"]
-verb = ["ดู", "มี", "ทำ"]
-obj1 = ["hw","homework","การบ้าน","งานค้าง","งานที่ต้องส่ง","assignment"]
-question_phrase = ["ยังไง","อย่างไร","ไง","ที่ไหน"]
-manner_phrase = ["ค่ะ", "ครับ","ค่า","คับ","หรอ","วะ","อ่ะ","อ่า",""]
-question_mark = ["?", ""]
+dictJSON = dict()
+intentGUID = "a3cb797f-1833-1111-adf3-7d704fa7b100"
+userSaysGUID = "a3cb797f-1833-0000-adf4-"
+start_phrase = [("จะ",1), ("ต้อง",1) , ("อยากทราบว่า",2) , ("อยากรู้ว่า",1)]
+verb = [("ดู",1), ("มี",1), ("ทำ",1)]
+obj1 = [("homework",1),("การบ้าน",1),("งานค้าง",1),("งานที่ต้องส่ง",1),("assignment",1)]
+question_phrase = [("ยังไง",1),("อย่างไร",2),("ไง",1),("ที่ไหน",1)]
+manner_phrase = [("ค่ะ",2), ("ครับ",2),("ค่า",1),("คับ",1),("หรอ",1),("วะ",0),("อ่ะ",1),("อ่า",1),("",1)]
+question_mark = [("?",1), ("",1)]
 
 def generateSentence(n):
     file = open("intent-2-out.txt","w")
     a = []
-    for i in range(n):
-        s = ""
-        s += start_phrase[np.random.randint(0,len(start_phrase))]
-        s += verb[np.random.randint(0,len(verb))]
-        s += obj1[np.random.randint(0,len(obj1))]
+    i = 0
+    while i < n:
+        s = []
+        s.append(start_phrase[np.random.randint(0,len(start_phrase))])
+        s.append(verb[np.random.randint(0,len(verb))])
+        s.append(obj1[np.random.randint(0,len(obj1))])
 
-        s += question_phrase[np.random.randint(0,len(question_phrase))]
-        s += manner_phrase[np.random.randint(0,len(manner_phrase))]
-        s += question_mark[np.random.randint(0,2)]       
+        s.append(question_phrase[np.random.randint(0,len(question_phrase))])
+        s.append(manner_phrase[np.random.randint(0,len(manner_phrase))])
+        s.append(question_mark[np.random.randint(0,2)])
+
+        if not util.validatePoliteness(s):
+            continue
+        s = ''.join([e[0] for e in s])
         if(s in D):
-            i -= 1
             continue
         D[s] = True
         a.append(s)
+        util.addSentenceToJson(dictJSON,s,userSaysGUID,i)
+        i += 1
     for line in a:
         file.writelines(line + "\n")
+    jsonFile = open('intent-2.json','w')
+    jsonFile.writelines(json.dumps(dictJSON))
+    print(json.dumps(dictJSON))
 
 if __name__ == "__main__":
-    generateSentence(1000)
+    dictJSON = util.parseJSON()
+    util.initializeJSON(dictJSON, intentGUID, "Q2: How to check for assignment?")
+    generateSentence(2000)

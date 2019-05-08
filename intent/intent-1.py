@@ -26,8 +26,8 @@ question_mark = [("?",1), ("",1)]
 def generateSentence(n):
     file = open("intent-1-out.txt","w")
     a = []
-
-    for i in range(n):
+    i = 0
+    while i < n:
         s = []
         s.append(start_phrase[np.random.randint(0,len(start_phrase))])
         s.append(verb[np.random.randint(0,len(verb))])
@@ -39,21 +39,16 @@ def generateSentence(n):
         s.append(end_phrase[np.random.randint(0,len(end_phrase))])
         s.append(manner_phrase[np.random.randint(0,len(manner_phrase))])
         s.append(question_mark[np.random.randint(0,1)])
-        check0 = False
-        check2 = False
-        for item in s:
-            if(item[1] == 0): check0 = True
-            elif(item[1] == 2): check2 = True
+
         if not util.validatePoliteness(s):
-          continue
-          
+            continue
         s = ''.join([e[0] for e in s])
         if(s in D):
-            i -= 1
             continue
         D[s] = True
         a.append(s)
         util.addSentenceToJson(dictJSON,s,userSaysGUID,i)
+        i += 1
     for line in a:
         file.writelines(line + "\n")
     jsonFile = open('intent-1.json','w')
