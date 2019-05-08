@@ -3,6 +3,7 @@
 import numpy as np
 import os
 import json
+import util
 
 D = dict()  # check for double occurances
 
@@ -15,18 +16,6 @@ obj2 = [("อาจารย์", 1), ("ครู", 1), ("รายวิชา"
 question_phrase = [("ยังไง", 1), ("อย่างไร", 2), ("ไง", 0), ("ที่ไหน", 1), ("อยู่ที่ไหน", 1), ("ไหม", 1), ("ยังงัย", 0)]
 manner_phrase = [("ค่ะ", 1), ("ครับ", 1), ("ค่า", 0), ("คับ", 0), ("หรอ", 1), ("วะ", 0), ("อ่ะ", 1), ("อ่า", 0), ("", 1)]
 question_mark = [("?", 1), ("", 1)]
-
-def validatePoliteness(sentenceList):
-  veryPolite = False
-  veryImpolite = False
-  for e in sentenceList:
-    if e[1] == 2:
-      veryPolite = True
-      break
-  for e in sentenceList:
-    if e[1] == 0:
-      veryImpolite = True
-  return not (veryPolite and veryImpolite)
 
 def generateSentence(n):
     file = open("intent-4-out.txt", "w")
@@ -43,10 +32,10 @@ def generateSentence(n):
         s.append(manner_phrase[np.random.randint(0, len(manner_phrase))])
         s.append(question_mark[np.random.randint(0, 2)])
 
-        if not validatePoliteness(s):
+        if not util.validatePoliteness(s):
           continue
-          
-        s = ''.join([e[0] for e in s])
+
+        s = util.list2Sentence(s)
 
         if(s in D):
             i -= 1
