@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "pythonfile",
             "type": "shell",
-            "command": "python3 intent-1.py",
+            "command": "python3 trimdata.py",
             "group": {
                 "kind": "build",
                 "isDefault": true
