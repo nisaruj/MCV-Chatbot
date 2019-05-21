@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "pythonfile",
+            "label": "DaiExcecutepython",
             "type": "shell",
-            "command": "python3 trimdata.py",
+            "command": "python3 intent-1.py",
             "group": {
                 "kind": "build",
                 "isDefault": true
