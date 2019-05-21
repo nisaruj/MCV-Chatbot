@@ -9,10 +9,10 @@ D = dict() #check for double occurances
 dictJSON = dict()
 intentGUID = "a3cb797f-1833-1111-adf3-7d704fa7b100"
 userSaysGUID = "a3cb797f-1833-0000-adf4-"
-start_phrase = [("จะ",1), ("ต้อง",1) , ("อยากทราบว่า",2) , ("อยากรู้ว่า",1)]
-verb = [("ดู",1), ("มี",1), ("ทำ",1)]
-obj1 = [("homework",1),("การบ้าน",1),("งานค้าง",1),("งานที่ต้องส่ง",1),("assignment",1)]
-question_phrase = [("ยังไง",1),("อย่างไร",2),("ไง",1),("ที่ไหน",1)]
+start_phrase = [("จะ",1), ("อยากสอบถามว่า",1)]
+verb = [("ดู",1), ("มี",1), ("เช็ค",1)]
+obj1 = [("การบ้าน",1),("assignment",1)]
+question_phrase = [("บ้าง",1),("ที่ไหน",2),("ไง",1),("ยังไง",1)]
 manner_phrase = [("ค่ะ",2), ("ครับ",2),("ค่า",1),("คับ",1),("หรอ",1),("วะ",0),("อ่ะ",1),("อ่า",1),("",1)]
 question_mark = [("?",1), ("",1)]
 
@@ -48,4 +48,4 @@ def generateSentence(n):
 if __name__ == "__main__":
     dictJSON = util.parseJSON()
     util.initializeJSON(dictJSON, intentGUID, "Q2: How to check for assignment?")
-    generateSentence(2000)
+    generateSentence(100)

@@ -10,12 +10,12 @@ intentGUID = "a3cb797f-1833-1111-adf3-7d704fa7b300"
 userSaysGUID = "a3cb797f-1833-0000-adf5-"
 
 " -- not configured yet -- "
-# start_phrase = [("จะ",1), ("ต้อง",1) , ("อยากทราบว่า",2) , ("อยากรู้ว่า",1)]
-# verb = [("ดู",1), ("มี",1), ("ทำ",1)]
-# obj1 = [("homework",1),("การบ้าน",1),("งานค้าง",1),("งานที่ต้องส่ง",1),("assignment",1)]
-# question_phrase = [("ยังไง",1),("อย่างไร",2),("ไง",1),("ที่ไหน",1)]
-# manner_phrase = [("ค่ะ",2), ("ครับ",2),("ค่า",1),("คับ",1),("หรอ",1),("วะ",0),("อ่ะ",1),("อ่า",1),("",1)]
-# question_mark = [("?",1), ("",1)]
+start_phrase = [("จะ",1), ("มันต้อง",1) , ("อยากทราบวิธี",1) , ("แม่ง",0)]
+verb = [("สมัคร",1), ("ลงทะเบียน",1), ("ลง",1)]
+obj1 = [("รายวิชา",1),("คอร์สเรียน",1),("เรียน",1)]
+question_phrase = [("ไหม",1),("อย่างไร",2),("ไง",1)]
+manner_phrase = [("ครับ",2),("ค้าบ",0),("หรอ",1),("วะ",0),("",1)]
+question_mark = [("?",1), ("",1)]
 
 def generateSentence(n):
     file = open("intent-3-out.txt","w")
@@ -23,13 +23,13 @@ def generateSentence(n):
     i = 0
     while i < n:
         s = []
-        # s.append(start_phrase[np.random.randint(0,len(start_phrase))])
-        # s.append(verb[np.random.randint(0,len(verb))])
-        # s.append(obj1[np.random.randint(0,len(obj1))])
+        s.append(start_phrase[np.random.randint(0,len(start_phrase))])
+        s.append(verb[np.random.randint(0,len(verb))])
+        s.append(obj1[np.random.randint(0,len(obj1))])
 
-        # s.append(question_phrase[np.random.randint(0,len(question_phrase))])
-        # s.append(manner_phrase[np.random.randint(0,len(manner_phrase))])
-        # s.append(question_mark[np.random.randint(0,2)])
+        s.append(question_phrase[np.random.randint(0,len(question_phrase))])
+        s.append(manner_phrase[np.random.randint(0,len(manner_phrase))])
+        s.append(question_mark[np.random.randint(0,2)])
 
         if not util.validatePoliteness(s):
             continue
@@ -49,4 +49,4 @@ def generateSentence(n):
 if __name__ == "__main__":
     dictJSON = util.parseJSON()
     util.initializeJSON(dictJSON, intentGUID, "Q3: How to enroll courses (for students)")
-    generateSentence(2000)
+    generateSentence(100)
